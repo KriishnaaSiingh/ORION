@@ -1,0 +1,75 @@
+{
+  "$schema": "https://openapi.vercel.sh/vercel.json",
+  "services": {
+    "app": {
+      "root": ".",
+      "framework": "tanstack-start-lovable",
+      "bindings": [
+        {
+          "type": "service",
+          "service": "backend-fallback",
+          "format": "url",
+          "env": "BACKEND_URL"
+        },
+        {
+          "type": "service",
+          "service": "ai-orchestrator",
+          "format": "url",
+          "env": "AI_ORCHESTRATOR_URL"
+        },
+        {
+          "type": "service",
+          "service": "ml-service",
+          "format": "url",
+          "env": "ML_SERVICE_URL"
+        }
+      ]
+    },
+    "ai-orchestrator": {
+      "root": "ai-orchestrator",
+      "framework": "fastapi",
+      "bindings": [
+        {
+          "type": "service",
+          "service": "backend-fallback",
+          "format": "url",
+          "env": "BACKEND_URL"
+        }
+      ]
+    },
+    "ml-service": {
+      "root": "ml-service",
+      "framework": "fastapi"
+    },
+    "backend-fallback": {
+      "root": "orion-platform/backend-fallback",
+      "framework": "express"
+    }
+  },
+  "rewrites": [
+    {
+      "source": "/api/v1/(.*)",
+      "destination": {
+        "service": "backend-fallback"
+      }
+    },
+    {
+      "source": "/api/ai/(.*)",
+      "destination": {
+        "service": "ai-orchestrator"
+      }
+    },
+    {
+      "source": "/api/ml/(.*)",
+      "destination": {
+        "service": "ml-service"
+      }
+    },
+    {
+      "source": "/(.*)",
+      "destination": {
+        "service": "app"
+      }
+    }
+  ]
+}

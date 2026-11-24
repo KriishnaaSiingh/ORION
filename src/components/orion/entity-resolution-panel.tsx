@@ -66,7 +66,11 @@ interface DedupeResult {
 }
 
 // ── Constants ────────────────────────────────────────────────
-const ML_API = import.meta.env["VITE_ML_API_URL"] ?? "http://localhost:8003";
+const ML_API =
+  import.meta.env["VITE_ML_API_URL"] ??
+  (typeof window !== "undefined" && window.location.hostname === "localhost"
+    ? "http://localhost:8003"
+    : "/api/ml");
 
 const FEATURE_LABELS: Record<string, string> = {
   fn_jw: "First name similarity",

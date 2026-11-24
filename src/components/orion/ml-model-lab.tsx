@@ -219,6 +219,12 @@ const BENCHMARK_PRESETS = [
   },
 ];
 
+const ML_API_BASE =
+  import.meta.env.VITE_ML_API_URL ||
+  (typeof window !== "undefined" && window.location.hostname === "localhost"
+    ? "http://localhost:8003"
+    : "/api/ml");
+
 export function MLModelLab() {
   const [activeTab, setActiveTab] = useState<"metrics" | "playground" | "corpus" | "java">("metrics");
   const [metrics, setMetrics] = useState<MLMetrics>(DEFAULT_METRICS);
@@ -237,7 +243,7 @@ export function MLModelLab() {
 
   // Check backend service
   useEffect(() => {
-    fetch("http://localhost:8003/metrics")
+    fetch(`${ML_API_BASE}/metrics`)
       .then((res) => {
         if (res.ok) {
           setServiceOnline(true);
@@ -257,7 +263,7 @@ export function MLModelLab() {
   const runPrediction = async () => {
     setLoading(true);
     try {
-      const res = await fetch("http://localhost:8003/predict", {
+      const res = await fetch(`${ML_API_BASE}/predict`, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({

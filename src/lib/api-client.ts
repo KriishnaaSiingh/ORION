@@ -1,5 +1,22 @@
-const API_BASE_URL = "http://localhost:8085/api/v1";
-const AI_API_BASE_URL = "http://localhost:8002";
+const API_BASE_URL =
+  import.meta.env.VITE_API_BASE_URL ||
+  (typeof window !== "undefined" && window.location.hostname === "localhost"
+    ? "http://localhost:8085/api/v1"
+    : "/api/v1");
+
+const AI_API_BASE_URL =
+  import.meta.env.VITE_AI_API_BASE_URL ||
+  (typeof window !== "undefined" && window.location.hostname === "localhost"
+    ? "http://localhost:8002"
+    : "/api/ai");
+
+const resolveUrl = (base: string, endpoint: string) => {
+  if (base.startsWith("http://") || base.startsWith("https://")) {
+    return new URL(`${base}${endpoint}`);
+  }
+  const origin = typeof window !== "undefined" ? window.location.origin : "http://localhost:8085";
+  return new URL(`${base}${endpoint}`, origin);
+};
 
 const getTenantId = (): string => {
   const token = localStorage.getItem("token");
@@ -23,7 +40,7 @@ const getTenantId = (): string => {
 
 export const apiClient = {
   async get<T = unknown>(endpoint: string, params?: Record<string, string>): Promise<T> {
-    const url = new URL(`${API_BASE_URL}${endpoint}`);
+    const url = resolveUrl(API_BASE_URL, endpoint);
     if (params) {
       Object.entries(params).forEach(([key, value]) => url.searchParams.append(key, value));
     }

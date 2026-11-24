@@ -5,9 +5,12 @@ import httpx
 import asyncio
 import uuid
 
+import os
+
 app = FastAPI(title="Orion AI Orchestrator")
 
-JAVA_BACKEND_URL = "http://localhost:8085/api/v1"
+BACKEND_BASE_URL = os.environ.get("BACKEND_URL", "http://localhost:8085").rstrip("/")
+JAVA_BACKEND_URL = f"{BACKEND_BASE_URL}/api/v1"
 
 class ChatRequest(BaseModel):
     message: str
