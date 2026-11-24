@@ -487,9 +487,14 @@ function ShellContent({ children }: { children: React.ReactNode }) {
 // ─── Public export ────────────────────────────────────────────────────────────
 export function AppShell({ children }: { children: React.ReactNode }) {
   const pathname = useRouterState({ select: (s) => s.location.pathname });
+  const { status, initialized } = useAuth();
 
-  // Public routes: render children as-is (login/register have their own full-page designs)
-  if (pathname === "/login" || pathname === "/register") {
+  // Public routes & unauthenticated landing page: render children cleanly without dashboard shell
+  if (
+    pathname === "/login" ||
+    pathname === "/register" ||
+    (pathname === "/" && (!initialized || status !== "authenticated"))
+  ) {
     return <>{children}</>;
   }
 
