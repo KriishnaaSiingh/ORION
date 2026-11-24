@@ -1,0 +1,285 @@
+{
+  "model_type": "HistGradientBoosting",
+  "trained_at": "2026-11-24T07:38:04Z",
+  "train_rows": 24000,
+  "test_rows": 6000,
+  "accuracy": 0.9882,
+  "auc_roc": 0.9986,
+  "precision_match": 0.9956,
+  "recall_match": 0.9807,
+  "f1_match": 0.9881,
+  "confusion_matrix": {
+    "tp": 2942,
+    "fp": 13,
+    "tn": 2987,
+    "fn": 58,
+    "raw": [
+      [
+        2987,
+        13
+      ],
+      [
+        58,
+        2942
+      ]
+    ]
+  },
+  "roc_curve": [
+    {
+      "fpr": 0.0,
+      "tpr": 0.0
+    },
+    {
+      "fpr": 0.0,
+      "tpr": 0.3303
+    },
+    {
+      "fpr": 0.0,
+      "tpr": 0.468
+    },
+    {
+      "fpr": 0.0,
+      "tpr": 0.6307
+    },
+    {
+      "fpr": 0.0,
+      "tpr": 0.7033
+    },
+    {
+      "fpr": 0.0,
+      "tpr": 0.7623
+    },
+    {
+      "fpr": 0.0,
+      "tpr": 0.8207
+    },
+    {
+      "fpr": 0.0,
+      "tpr": 0.8707
+    },
+    {
+      "fpr": 0.0003,
+      "tpr": 0.943
+    },
+    {
+      "fpr": 0.0073,
+      "tpr": 0.9837
+    },
+    {
+      "fpr": 0.032,
+      "tpr": 0.9897
+    },
+    {
+      "fpr": 0.0737,
+      "tpr": 0.9937
+    },
+    {
+      "fpr": 0.1167,
+      "tpr": 0.9967
+    },
+    {
+      "fpr": 0.185,
+      "tpr": 0.998
+    },
+    {
+      "fpr": 0.258,
+      "tpr": 0.9987
+    },
+    {
+      "fpr": 0.3613,
+      "tpr": 0.9997
+    },
+    {
+      "fpr": 0.4513,
+      "tpr": 1.0
+    },
+    {
+      "fpr": 0.583,
+      "tpr": 1.0
+    },
+    {
+      "fpr": 0.6767,
+      "tpr": 1.0
+    },
+    {
+      "fpr": 0.731,
+      "tpr": 1.0
+    },
+    {
+      "fpr": 0.7763,
+      "tpr": 1.0
+    },
+    {
+      "fpr": 0.8357,
+      "tpr": 1.0
+    },
+    {
+      "fpr": 0.8837,
+      "tpr": 1.0
+    },
+    {
+      "fpr": 0.9343,
+      "tpr": 1.0
+    },
+    {
+      "fpr": 0.963,
+      "tpr": 1.0
+    },
+    {
+      "fpr": 0.9917,
+      "tpr": 1.0
+    },
+    {
+      "fpr": 1.0,
+      "tpr": 1.0
+    }
+  ],
+  "pr_curve": [
+    {
+      "precision": 0.5,
+      "recall": 1.0
+    },
+    {
+      "precision": 0.5227,
+      "recall": 1.0
+    },
+    {
+      "precision": 0.5397,
+      "recall": 1.0
+    },
+    {
+      "precision": 0.5574,
+      "recall": 1.0
+    },
+    {
+      "precision": 0.5756,
+      "recall": 1.0
+    },
+    {
+      "precision": 0.5937,
+      "recall": 1.0
+    },
+    {
+      "precision": 0.6121,
+      "recall": 1.0
+    },
+    {
+      "precision": 0.6295,
+      "recall": 1.0
+    },
+    {
+      "precision": 0.6495,
+      "recall": 1.0
+    },
+    {
+      "precision": 0.6695,
+      "recall": 1.0
+    },
+    {
+      "precision": 0.6901,
+      "recall": 1.0
+    },
+    {
+      "precision": 0.7139,
+      "recall": 1.0
+    },
+    {
+      "precision": 0.7399,
+      "recall": 0.9997
+    },
+    {
+      "precision": 0.7672,
+      "recall": 0.9987
+    },
+    {
+      "precision": 0.7949,
+      "recall": 0.9987
+    },
+    {
+      "precision": 0.8264,
+      "recall": 0.9983
+    },
+    {
+      "precision": 0.8596,
+      "recall": 0.998
+    },
+    {
+      "precision": 0.8979,
+      "recall": 0.9967
+    },
+    {
+      "precision": 0.9362,
+      "recall": 0.9937
+    },
+    {
+      "precision": 0.9808,
+      "recall": 0.9877
+    },
+    {
+      "precision": 0.9993,
+      "recall": 0.9597
+    },
+    {
+      "precision": 1.0,
+      "recall": 0.9137
+    },
+    {
+      "precision": 1.0,
+      "recall": 0.8597
+    },
+    {
+      "precision": 1.0,
+      "recall": 0.7757
+    },
+    {
+      "precision": 1.0,
+      "recall": 0.6597
+    },
+    {
+      "precision": 1.0,
+      "recall": 0.0067
+    }
+  ],
+  "feature_importances": {
+    "fn_jw": 0.0035,
+    "sn_jw": 0.104,
+    "fullname_jw": 0.032,
+    "dob_exact": 0.0005,
+    "year_exact": 0.0185,
+    "dob_lev": 0.0255,
+    "postcode_exact": 0.0,
+    "postcode_lev": 0.142,
+    "phone_exact": 0.0,
+    "email_lev": 0.0,
+    "soundex_sn": 0.005,
+    "soundex_fn": 0.0,
+    "address_lev": 0.114,
+    "miss_fn": 0.006,
+    "miss_sn": 0.0005,
+    "miss_dob": 0.0,
+    "miss_pc": 0.002,
+    "miss_ph": 0.0
+  },
+  "feature_names": [
+    "fn_jw",
+    "sn_jw",
+    "fullname_jw",
+    "dob_exact",
+    "year_exact",
+    "dob_lev",
+    "postcode_exact",
+    "postcode_lev",
+    "phone_exact",
+    "email_lev",
+    "soundex_sn",
+    "soundex_fn",
+    "address_lev",
+    "miss_fn",
+    "miss_sn",
+    "miss_dob",
+    "miss_pc",
+    "miss_ph"
+  ],
+  "dataset_rows": 114845,
+  "training_time_s": 48.0
+}

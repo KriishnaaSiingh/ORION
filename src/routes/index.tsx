@@ -1,12 +1,13 @@
-import { createFileRoute, Outlet } from "@tanstack/react-router";
+import { createFileRoute, useNavigate } from "@tanstack/react-router";
 import { useEffect } from "react";
-import { DashboardPage } from "@/components/orion/dashboard-page";
 import { LandingPage } from "@/components/orion/landing-page";
 import { useAuth } from "@/lib/auth-store";
 import { Spinner } from "@/components/ui/spinner";
+import { DashboardOverview } from "@/components/ui/glassy-dashboard";
 
 function IndexSwitch() {
   const { initialize, status, initialized } = useAuth();
+  const navigate = useNavigate();
 
   useEffect(() => {
     void initialize();
@@ -16,8 +17,8 @@ function IndexSwitch() {
     return (
       <div className="flex min-h-screen items-center justify-center bg-background">
         <div className="flex flex-col items-center gap-4">
-          <div className="flex size-11 items-center justify-center rounded-lg bg-primary">
-            <span className="font-display text-sm font-bold text-primary-foreground">O</span>
+          <div className="flex size-12 items-center justify-center rounded-xl bg-card border border-border p-2 shadow-sm">
+            <img src="/orion-logo.png" alt="Orion" className="w-full h-full object-contain" />
           </div>
           <Spinner size="sm" />
           <p className="text-xs text-muted-foreground">Starting Orion…</p>
@@ -26,8 +27,12 @@ function IndexSwitch() {
     );
   }
 
-  const isAuthed = status === "authenticated";
-  return isAuthed ? <DashboardPage /> : <LandingPage />;
+  if (status === "authenticated") {
+    // AppShell already wraps this in the glassy shell — just render the overview content
+    return <DashboardOverview />;
+  }
+
+  return <LandingPage />;
 }
 
 export const Route = createFileRoute("/")({

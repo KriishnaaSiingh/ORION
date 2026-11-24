@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import { Link, useNavigate, useRouterState } from "@tanstack/react-router";
-import { AlertTriangle, ArrowRight, CheckCircle2, Eye, EyeOff, ShieldCheck } from "lucide-react";
+import { AlertTriangle, ArrowRight, CheckCircle2, Eye, EyeOff } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
@@ -9,6 +9,7 @@ import { Spinner } from "@/components/ui/spinner";
 import { useAuth, isSupabaseConfigured } from "@/lib/auth-store";
 import { apiClient } from "@/lib/api-client";
 import { toast } from "sonner";
+import { AuthSplitLayout } from "@/components/ui/auth-ui";
 
 export function AuthPage({ mode }: { mode: "login" | "register" }) {
   const navigate = useNavigate();
@@ -116,46 +117,9 @@ export function AuthPage({ mode }: { mode: "login" | "register" }) {
   const disabled = submitting || (initialized && status === "loading");
 
   return (
-    <main className="grid min-h-screen bg-background lg:grid-cols-[1fr_480px]">
-      <section className="relative hidden overflow-hidden border-r border-border lg:flex lg:flex-col lg:justify-between lg:p-12">
-        <div className="absolute inset-0 bg-auth-grid opacity-50" />
-        <div className="relative flex items-center gap-3">
-          <div className="flex size-9 items-center justify-center rounded-md bg-primary font-display font-bold text-primary-foreground">
-            O
-          </div>
-          <div>
-            <p className="font-display text-sm font-semibold">Orion Intelligence</p>
-            <p className="text-[10px] text-muted-foreground">Enterprise Decision OS</p>
-          </div>
-        </div>
-        <div className="relative max-w-2xl">
-          <div className="mb-7 flex size-12 items-center justify-center rounded-md border border-primary/30 bg-primary/10">
-            <ShieldCheck className="text-primary" />
-          </div>
-          <h1 className="font-display text-4xl font-semibold leading-tight">
-            Turn fragmented data into
-            <br />
-            operational decisions.
-          </h1>
-          <p className="mt-5 max-w-lg text-base leading-7 text-muted-foreground">
-            A governed knowledge layer for complex investigations, trusted AI, and mission-critical
-            applications.
-          </p>
-        </div>
-        <p className="relative text-xs text-muted-foreground">
-          SOC 2 Type II · ISO 27001 · Enterprise SSO
-        </p>
-      </section>
-
-      <section className="flex items-center justify-center p-6">
-        <form className="w-full max-w-sm" onSubmit={onSubmit}>
-          <div className="mb-10 flex items-center gap-3 lg:hidden">
-            <div className="flex size-9 items-center justify-center rounded-md bg-primary font-display font-bold text-primary-foreground">
-              O
-            </div>
-            <span className="font-display font-semibold">Orion Intelligence</span>
-          </div>
-
+    <AuthSplitLayout mode={mode}>
+      <div className="mx-auto w-full max-w-[400px]">
+        <form className="w-full" onSubmit={onSubmit}>
           <p className="text-[11px] font-semibold uppercase tracking-[.15em] text-primary">
             Secure workspace
           </p>
@@ -164,15 +128,15 @@ export function AuthPage({ mode }: { mode: "login" | "register" }) {
           </h2>
           <p className="mt-2 text-sm text-muted-foreground">
             {isLogin
-              ? "Access your organization’s intelligence workspace."
-              : "Join your organization’s intelligence workspace."}
+              ? "Access your organization's intelligence workspace."
+              : "Join your organization's intelligence workspace."}
           </p>
 
           {needConfirm && (
             <Alert variant="default" className="mt-6 border-emerald-500/30 bg-emerald-500/10">
               <CheckCircle2 className="size-4 text-emerald-500" />
               <AlertDescription className="text-xs">
-                Check your inbox — we’ve sent a confirmation link to{" "}
+                Check your inbox — we've sent a confirmation link to{" "}
                 <span className="font-medium">{email}</span>.
               </AlertDescription>
             </Alert>
@@ -292,10 +256,10 @@ export function AuthPage({ mode }: { mode: "login" | "register" }) {
           </p>
 
           <p className="mt-8 border-t border-border pt-5 text-center text-[10px] leading-5 text-muted-foreground">
-            By continuing, you agree to your organization’s security and acceptable use policies.
+            By continuing, you agree to your organization's security and acceptable use policies.
           </p>
         </form>
-      </section>
-    </main>
+      </div>
+    </AuthSplitLayout>
   );
 }

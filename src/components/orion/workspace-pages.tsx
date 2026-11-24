@@ -4,6 +4,7 @@ import { Link, useNavigate } from "@tanstack/react-router";
 import {
   AppWindow,
   Boxes,
+  BrainCircuit,
   CalendarClock,
   Check,
   ChevronRight,
@@ -34,6 +35,7 @@ import {
   Workflow,
   X,
 } from "lucide-react";
+import { MLModelLab } from "./ml-model-lab";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
@@ -933,6 +935,7 @@ export function SettingsPage({ admin = false }: { admin?: boolean }) {
   const profile = useOrionStore((s) => s.profile);
   const updateProfile = useOrionStore((s) => s.updateProfile);
 
+  const [activeSection, setActiveSection] = useState(0);
   const [firstName, setFirstName] = useState(profile.firstName);
   const [lastName, setLastName] = useState(profile.lastName);
   const [email, setEmail] = useState(profile.email);
@@ -954,6 +957,7 @@ export function SettingsPage({ admin = false }: { admin?: boolean }) {
 
   const sections = admin
     ? [
+        { t: "ML Model Lab & Diagnostics", d: "Demonstration suite, confusion matrix, ROC curves, and test playground", i: BrainCircuit },
         { t: "User administration", d: "Manage accounts, roles, and access policies", i: Users },
         { t: "Audit log", d: "Review privileged changes and security events", i: FileClock },
         { t: "Platform controls", d: "Configure retention, integrations, and limits", i: Shield },
@@ -982,56 +986,66 @@ export function SettingsPage({ admin = false }: { admin?: boolean }) {
           {sections.map((s, i) => (
             <button
               key={s.t}
-              className={`flex w-full items-center gap-3 rounded px-3 py-2.5 text-left text-xs ${
-                i === 0 ? "bg-accent font-medium text-foreground" : "text-muted-foreground hover:bg-accent"
+              onClick={() => setActiveSection(i)}
+              className={`flex w-full items-center gap-3 rounded-lg px-3 py-2.5 text-left text-xs transition ${
+                activeSection === i
+                  ? "bg-accent font-semibold text-foreground shadow-sm border border-border"
+                  : "text-muted-foreground hover:bg-accent/60"
               }`}
             >
-              <s.i className="size-4" />
+              <s.i className={`size-4 ${i === 0 && admin ? "text-emerald-500" : ""}`} />
               {s.t}
             </button>
           ))}
         </nav>
-        <Section title={sections[0]?.t ?? ""} description={sections[0]?.d ?? ""}>
-          <div className="max-w-xl space-y-6 p-5">
-            <div className="grid gap-4 sm:grid-cols-2">
-              <div className="space-y-2">
-                <Label>First name</Label>
-                <Input value={firstName} onChange={(e) => setFirstName(e.target.value)} />
-              </div>
-              <div className="space-y-2">
-                <Label>Last name</Label>
-                <Input value={lastName} onChange={(e) => setLastName(e.target.value)} />
-              </div>
-            </div>
-            <div className="space-y-2">
-              <Label>Email address</Label>
-              <Input value={email} onChange={(e) => setEmail(e.target.value)} />
-            </div>
-            <div className="space-y-2">
-              <Label>Workspace domain</Label>
-              <Input value={domain} onChange={(e) => setDomain(e.target.value)} />
-            </div>
-            <div className="flex items-center justify-between border-t border-border pt-5">
-              <div>
-                <p className="text-xs font-medium">Require multi-factor authentication</p>
-                <p className="mt-1 text-[11px] text-muted-foreground">
-                  Enforce hardware keys or authenticator apps for workspace logins.
-                </p>
-              </div>
-              <Switch checked={mfa} onCheckedChange={setMfa} />
-            </div>
-            <div className="flex items-center justify-between border-t border-border pt-5">
-              <div>
-                <p className="text-xs font-medium">Weekly intelligence summary</p>
-                <p className="mt-1 text-[11px] text-muted-foreground">
-                  Receive a weekly overview of pipeline events, new objects, and assigned items.
-                </p>
-              </div>
-              <Switch checked={weeklySummary} onCheckedChange={setWeeklySummary} />
-            </div>
-            <Button onClick={handleSave}>Save changes</Button>
+
+        {admin && activeSection === 0 ? (
+          <div className="min-w-0">
+            <MLModelLab />
           </div>
-        </Section>
+        ) : (
+          <Section title={sections[activeSection]?.t ?? ""} description={sections[activeSection]?.d ?? ""}>
+            <div className="max-w-xl space-y-6 p-5">
+              <div className="grid gap-4 sm:grid-cols-2">
+                <div className="space-y-2">
+                  <Label>First name</Label>
+                  <Input value={firstName} onChange={(e) => setFirstName(e.target.value)} />
+                </div>
+                <div className="space-y-2">
+                  <Label>Last name</Label>
+                  <Input value={lastName} onChange={(e) => setLastName(e.target.value)} />
+                </div>
+              </div>
+              <div className="space-y-2">
+                <Label>Email address</Label>
+                <Input value={email} onChange={(e) => setEmail(e.target.value)} />
+              </div>
+              <div className="space-y-2">
+                <Label>Workspace domain</Label>
+                <Input value={domain} onChange={(e) => setDomain(e.target.value)} />
+              </div>
+              <div className="flex items-center justify-between border-t border-border pt-5">
+                <div>
+                  <p className="text-xs font-medium">Require multi-factor authentication</p>
+                  <p className="mt-1 text-[11px] text-muted-foreground">
+                    Enforce hardware keys or authenticator apps for workspace logins.
+                  </p>
+                </div>
+                <Switch checked={mfa} onCheckedChange={setMfa} />
+              </div>
+              <div className="flex items-center justify-between border-t border-border pt-5">
+                <div>
+                  <p className="text-xs font-medium">Weekly intelligence summary</p>
+                  <p className="mt-1 text-[11px] text-muted-foreground">
+                    Receive a weekly overview of pipeline events, new objects, and assigned items.
+                  </p>
+                </div>
+                <Switch checked={weeklySummary} onCheckedChange={setWeeklySummary} />
+              </div>
+              <Button onClick={handleSave}>Save changes</Button>
+            </div>
+          </Section>
+        )}
       </div>
     </div>
   );

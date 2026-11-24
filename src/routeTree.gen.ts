@@ -8,21 +8,22 @@
 // You should NOT make any changes in this file as it will be overwritten.
 // Additionally, you should also exclude this file from your linter and/or formatter to prevent it from being checked or modified.
 
-import { Route as rootRouteImport } from './routes/__root.tsx'
+import { Route as rootRouteImport } from './routes/__root'
 import { Route as IndexRouteImport } from './routes/index'
-import { Route as AdminRouteImport } from './routes/admin.tsx'
-import { Route as LoginRouteImport } from './routes/login.tsx'
-import { Route as RegisterRouteImport } from './routes/register.tsx'
-import { Route as SettingsRouteImport } from './routes/settings.tsx'
+import { Route as AdminRouteImport } from './routes/admin'
+import { Route as EntityResolutionRouteImport } from './routes/entity-resolution'
+import { Route as LoginRouteImport } from './routes/login'
+import { Route as RegisterRouteImport } from './routes/register'
+import { Route as SettingsRouteImport } from './routes/settings'
 import { Route as ApplicationsIndexRouteImport } from './routes/applications/index'
-import { Route as ApplicationsAppIdRouteImport } from './routes/applications/$appId.tsx'
+import { Route as ApplicationsAppIdRouteImport } from './routes/applications/$appId'
 import { Route as AssistantIndexRouteImport } from './routes/assistant/index'
-import { Route as AssistantThreadIdRouteImport } from './routes/assistant/$threadId.tsx'
+import { Route as AssistantThreadIdRouteImport } from './routes/assistant/$threadId'
 import { Route as BoardsIndexRouteImport } from './routes/boards/index'
-import { Route as BoardsBoardIdRouteImport } from './routes/boards/$boardId.tsx'
+import { Route as BoardsBoardIdRouteImport } from './routes/boards/$boardId'
 import { Route as IngestionIndexRouteImport } from './routes/ingestion/index'
 import { Route as KnowledgeIndexRouteImport } from './routes/knowledge/index'
-import { Route as KnowledgeObjectIdRouteImport } from './routes/knowledge/$objectId.tsx'
+import { Route as KnowledgeObjectIdRouteImport } from './routes/knowledge/$objectId'
 import { Route as OntologyIndexRouteImport } from './routes/ontology/index'
 
 const IndexRoute = IndexRouteImport.update({
@@ -33,6 +34,11 @@ const IndexRoute = IndexRouteImport.update({
 const AdminRoute = AdminRouteImport.update({
   id: '/admin',
   path: '/admin',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const EntityResolutionRoute = EntityResolutionRouteImport.update({
+  id: '/entity-resolution',
+  path: '/entity-resolution',
   getParentRoute: () => rootRouteImport,
 } as any)
 const LoginRoute = LoginRouteImport.update({
@@ -104,6 +110,7 @@ const OntologyIndexRoute = OntologyIndexRouteImport.update({
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
   '/admin': typeof AdminRoute
+  '/entity-resolution': typeof EntityResolutionRoute
   '/login': typeof LoginRoute
   '/register': typeof RegisterRoute
   '/settings': typeof SettingsRoute
@@ -121,6 +128,7 @@ export interface FileRoutesByFullPath {
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
   '/admin': typeof AdminRoute
+  '/entity-resolution': typeof EntityResolutionRoute
   '/login': typeof LoginRoute
   '/register': typeof RegisterRoute
   '/settings': typeof SettingsRoute
@@ -139,6 +147,7 @@ export interface FileRoutesById {
   __root__: typeof rootRouteImport
   '/': typeof IndexRoute
   '/admin': typeof AdminRoute
+  '/entity-resolution': typeof EntityResolutionRoute
   '/login': typeof LoginRoute
   '/register': typeof RegisterRoute
   '/settings': typeof SettingsRoute
@@ -156,60 +165,64 @@ export interface FileRoutesById {
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
   fullPaths:
-  | '/'
-  | '/admin'
-  | '/login'
-  | '/register'
-  | '/settings'
-  | '/applications/$appId'
-  | '/assistant/$threadId'
-  | '/boards/$boardId'
-  | '/knowledge/$objectId'
-  | '/applications/'
-  | '/assistant/'
-  | '/boards/'
-  | '/ingestion/'
-  | '/knowledge/'
-  | '/ontology/'
+    | '/'
+    | '/admin'
+    | '/entity-resolution'
+    | '/login'
+    | '/register'
+    | '/settings'
+    | '/applications/$appId'
+    | '/assistant/$threadId'
+    | '/boards/$boardId'
+    | '/knowledge/$objectId'
+    | '/applications/'
+    | '/assistant/'
+    | '/boards/'
+    | '/ingestion/'
+    | '/knowledge/'
+    | '/ontology/'
   fileRoutesByTo: FileRoutesByTo
   to:
-  | '/'
-  | '/admin'
-  | '/login'
-  | '/register'
-  | '/settings'
-  | '/applications/$appId'
-  | '/assistant/$threadId'
-  | '/boards/$boardId'
-  | '/knowledge/$objectId'
-  | '/applications'
-  | '/assistant'
-  | '/boards'
-  | '/ingestion'
-  | '/knowledge'
-  | '/ontology'
+    | '/'
+    | '/admin'
+    | '/entity-resolution'
+    | '/login'
+    | '/register'
+    | '/settings'
+    | '/applications/$appId'
+    | '/assistant/$threadId'
+    | '/boards/$boardId'
+    | '/knowledge/$objectId'
+    | '/applications'
+    | '/assistant'
+    | '/boards'
+    | '/ingestion'
+    | '/knowledge'
+    | '/ontology'
   id:
-  | '__root__'
-  | '/'
-  | '/admin'
-  | '/login'
-  | '/register'
-  | '/settings'
-  | '/applications/$appId'
-  | '/assistant/$threadId'
-  | '/boards/$boardId'
-  | '/knowledge/$objectId'
-  | '/applications/'
-  | '/assistant/'
-  | '/boards/'
-  | '/ingestion/'
-  | '/knowledge/'
-  | '/ontology/'
+    | '__root__'
+    | '/'
+    | '/admin'
+    | '/entity-resolution'
+    | '/login'
+    | '/register'
+    | '/settings'
+    | '/applications/$appId'
+    | '/assistant/$threadId'
+    | '/boards/$boardId'
+    | '/knowledge/$objectId'
+    | '/applications/'
+    | '/assistant/'
+    | '/boards/'
+    | '/ingestion/'
+    | '/knowledge/'
+    | '/ontology/'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
   AdminRoute: typeof AdminRoute
+  EntityResolutionRoute: typeof EntityResolutionRoute
   LoginRoute: typeof LoginRoute
   RegisterRoute: typeof RegisterRoute
   SettingsRoute: typeof SettingsRoute
@@ -239,6 +252,13 @@ declare module '@tanstack/react-router' {
       path: '/admin'
       fullPath: '/admin'
       preLoaderRoute: typeof AdminRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/entity-resolution': {
+      id: '/entity-resolution'
+      path: '/entity-resolution'
+      fullPath: '/entity-resolution'
+      preLoaderRoute: typeof EntityResolutionRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/login': {
@@ -338,6 +358,7 @@ declare module '@tanstack/react-router' {
 const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
   AdminRoute: AdminRoute,
+  EntityResolutionRoute: EntityResolutionRoute,
   LoginRoute: LoginRoute,
   RegisterRoute: RegisterRoute,
   SettingsRoute: SettingsRoute,

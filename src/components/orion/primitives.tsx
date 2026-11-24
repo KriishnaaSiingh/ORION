@@ -67,9 +67,9 @@ export function MetricCard({
   trend?: "up" | "down";
 }) {
   return (
-    <div className="group border-r border-b border-border bg-card p-5 transition-colors hover:bg-accent/30 last:border-r-0">
+    <div className="group rounded-xl border border-white/20 dark:border-white/10 bg-white/70 dark:bg-slate-900/60 p-5 shadow-sm backdrop-blur-xl transition-all hover:bg-white/90 dark:hover:bg-slate-800/80">
       <div className="flex items-start justify-between">
-        <div className="flex size-8 items-center justify-center rounded-md border border-border bg-background">
+        <div className="flex size-8 items-center justify-center rounded-lg border border-white/20 dark:border-white/10 bg-white/50 dark:bg-slate-800/50">
           <Icon className="size-4 text-muted-foreground" />
         </div>
         <Button size="icon-sm" variant="ghost" aria-label={`More ${label} options`}>
@@ -77,13 +77,13 @@ export function MetricCard({
         </Button>
       </div>
       <div className="mt-7">
-        <p className="text-xs text-muted-foreground">{label}</p>
+        <p className="text-xs text-muted-foreground font-medium uppercase tracking-wider">{label}</p>
         <div className="mt-1 flex items-end justify-between">
           <span className="font-display text-3xl font-semibold tabular-nums">{value}</span>
           <span
             className={cn(
-              "flex items-center text-xs",
-              trend === "up" ? "text-success" : "text-warning",
+              "flex items-center text-xs font-semibold",
+              trend === "up" ? "text-emerald-600 dark:text-emerald-400" : "text-amber-600 dark:text-amber-400",
             )}
           >
             {trend === "up" ? (
@@ -112,8 +112,8 @@ export function Section({
   className?: string;
 }) {
   return (
-    <section className={cn("border border-border bg-card", className)}>
-      <div className="flex items-center justify-between border-b border-border px-5 py-4">
+    <section className={cn("rounded-2xl border border-white/20 dark:border-white/10 bg-white/70 dark:bg-slate-900/60 shadow-md backdrop-blur-xl overflow-hidden", className)}>
+      <div className="flex items-center justify-between border-b border-white/20 dark:border-white/10 px-5 py-4 bg-white/40 dark:bg-slate-800/30">
         <div>
           <h2 className="text-sm font-semibold">{title}</h2>
           {description && <p className="mt-1 text-xs text-muted-foreground">{description}</p>}
