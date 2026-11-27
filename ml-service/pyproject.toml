@@ -1,2 +1,2 @@
 [tool.vercel]
-entrypoint = "er_model:app"
+entrypoint = "main:app"

@@ -40,7 +40,7 @@
     "ml-service": {
       "root": "ml-service",
       "framework": "fastapi",
-      "entrypoint": "er_model.py"
+      "entrypoint": "main.py"
     },
     "backend-fallback": {
       "root": "orion-platform/backend-fallback",
